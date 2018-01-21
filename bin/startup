@@ -1,0 +1,9 @@
+#!/bin/bash
+echo "#bash - executing shutdown"
+./shutdown
+echo "#bash - starting node"
+# add & to the end of your command to tell bash to fork the process off in the background
+node /home/pi/video-recorder-player/app.js &
+echo "#bash - starting chrome"
+echo "#bash - please wait..."
+chromium-browser -incognito --kiosk 127.0.0.1:5000

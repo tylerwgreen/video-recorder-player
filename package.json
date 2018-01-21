@@ -1,0 +1,23 @@
+{
+	"name":			"video-recorder-player",
+	"niceName":		"Video Recorder Player",
+	"license":		"UNLICENSED",
+	"version":		"1.0.0",
+	"private":		true,
+	"description":		"Video Recorder Player",
+	"author":		{
+		"name":		"Tyler Green",
+		"email":	"freshgreenmedia@gmail",
+		"url":		"http://freshgreenmedia.com/"
+	},
+	"dependencies":	{
+		"express":		"~4.14.1",
+		"connect-timeout":	"1.8.0",
+		"debug":		"~2.6.0",
+		"morgan":		"~1.7.0",
+		"rotating-file-stream":	"~1.1.9",
+		"grunt":		"~1.0.1",
+		"grunt-contrib-less":	"~1.4.0",
+		"grunt-contrib-watch":	"~1.0.0"
+	}
+}

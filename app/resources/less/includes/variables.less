@@ -1,0 +1,44 @@
+/** PATHS */
+// usage: background-image: url('@{images}image.png');
+// @images: '../img/';
+// @fonts: '../fonts/';
+
+/** DISPLAY */
+@display-width:		800px;
+@display-height:	480px;
+
+/** PROJECTOR */
+//	1280x800	native res
+//	1280x720	16:9 ratio
+//	800x450		16:9 ratio
+//	660x366		16:9 ratio
+//	480x270		16:9 ratio
+//@projector-width:	800px;
+//@projector-height:	450px;
+@preview-width:		660px;
+@preview-height:	366px;
+//@preview-width:		480px;
+//@preview-height:	270px;
+
+/** COLORS */
+@white:			hsl(0, 0%, 100%);
+@white-dark:	darken(@white, 10%);
+@white-light:	darken(@white, 20%);
+@grey:			hsl(0, 0%, 50%);
+@grey-dark:		darken(@grey, 15%);
+@grey-light:	lighten(@grey, 15%);
+@black:			hsl(0, 0%, 0%);
+@black-dark:	lighten(@black, 10%);
+@black-light:	lighten(@black, 20%);
+@red:			hsl(0, 100%, 30%);
+@red-light:		lighten(@red, 25%);
+@red-dark:		darken(@red, 25%);
+@green:			hsl(140, 100%, 20%);
+@green-light:	lighten(@green, 25%);
+@green-dark:	darken(@green, 25%);
+@blue:			hsl(200, 100%, 20%);
+@blue-light:	lighten(@blue, 25%);
+@blue-dark:		darken(@blue, 25%);
+@yellow:		hsl(60, 100%, 40%);
+@yellow-light:	lighten(@yellow, 25%);
+@yellow-dark:	darken(@yellow, 25%);

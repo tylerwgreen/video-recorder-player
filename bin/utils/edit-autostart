@@ -1,0 +1,3 @@
+#!/bin/bash
+
+sudo vim ~/.config/lxsession/LXDE-pi/autostart

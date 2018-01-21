@@ -1,0 +1,49 @@
+#convert-wrap{
+	z-index:-1;
+	.opacity(0);
+	position:absolute;
+	top:0;
+	width:@display-width;
+	height:@display-height;
+	text-align:center;
+	.transition(0.3s);
+	&.visible{
+		z-index:2000;
+		.opacity(100);
+	}
+	#convert-icon-wrap{
+		@height:200px;
+		position:absolute;
+		top:0;
+		left:0;
+		height:@display-height - @height;
+		width:@display-width / 2;
+		line-height:@display-height - @height;
+		i#convert-icon{
+			font-size:300px;
+			color:@green;
+		}
+	}
+	#convert-timer-wrap{
+		@height:200px;
+		position:absolute;
+		top:0;
+		right:0;
+		height:@display-height - @height;
+		width:@display-width / 2;
+		line-height:@display-height - @height;
+		font-size:200px;
+	}
+	#convert-info-text-wrap{
+		@height:200px;
+		width:@display-width;
+		height:@height;
+		line-height:@height;
+		position:absolute;
+		bottom:0;
+		font-size:130px;
+		#convert-info-text{
+			text-align:center;
+		}
+	}
+}

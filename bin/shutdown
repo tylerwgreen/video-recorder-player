@@ -1,0 +1,9 @@
+#!/bin/bash
+echo "#bash - Shutdown start"
+echo "#bash - killing node"
+killall node
+echo "#bash - killing chrome"
+killall chromium-browser
+echo "#bash - executing quiter-quit"
+./quitter-quit
+echo "#bash - Shutdown end"

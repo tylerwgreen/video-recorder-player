@@ -1,0 +1,9 @@
+#!/bin/bash
+echo "#bash - Video delete start"
+FILE_DIR_CONVERTED=$1
+FILE=$FILE_DIR_CONVERTED/$2
+killall omxplayer
+killall omxplayer.bin
+echo "#bash - Deleting $FILE"
+rm $FILE
+echo "#bash - Video delete end"
