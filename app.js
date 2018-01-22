@@ -21,7 +21,10 @@ var dirs	= {
 	audio:	'/home/pi/video-recorder-player/assets/audio/music/',
 	video:	{
 		recordings:	'/home/pi/video-recorder-player/assets/video/recordings/',
-		converted:	'/home/pi/video-recorder-player/assets/video/recordings/converted/',
+		converted:	{
+			new:	'/home/pi/video-recorder-player/assets/video/recordings/converted/new/',
+			old:	'/home/pi/video-recorder-player/assets/video/recordings/converted/old/',
+		}
 		// consent:	'/home/pi/video-recorder-player/assets/video/recordings/consent/',
 		// deletable:	'/home/pi/video-recorder-player/assets/video/recordings/deletable/',
 		// noConsent:	'/home/pi/video-recorder-player/assets/video/recordings/no-consent/',
@@ -42,21 +45,23 @@ var VideoConverter	= require(path.join(__dirname, paths.models, 'VideoConverter'
 var VideoPlayer		= require(path.join(__dirname, paths.models, 'VideoPlayer'));
 var Quitter			= require(path.join(__dirname, paths.models, 'Quitter'));
 Projector.init(dirs.bin, dirs.video.converted);
-Projector.project({
+return;
+/* Projector.project({
 	// fileName: '20180114-233353-consent.mp4',
 	// fileName: '20180114-233353-consent.mp4',
-	fileName: '20180114-235735-no-consent.mp4',
+	// fileName: '20180114-235735-no-consent.mp4',
+	// dir:		dirs.video.converted,
 	successCB:	function(){
 		console.log('success');
 	},
 	errorCB:	function(error){
 		console.log('error: ' + error);
 	}
-});
+}); */
 // return;
-Audio.init(dirs.bin, dirs.audio);
+// Audio.init(dirs.bin, dirs.audio);
 Camera.init(dirs.bin, dirs.video.recordings);
-VideoConverter.init(dirs.bin, dirs.video.recordings, dirs.video.converted);
+VideoConverter.init(dirs.bin, dirs.video.recordings, dirs.video.converted.new);
 VideoPlayer.init(dirs.bin);
 Quitter.init(dirs.bin);
 // return;
