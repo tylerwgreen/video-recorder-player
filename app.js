@@ -22,8 +22,10 @@ var dirs	= {
 	video:	{
 		recordings:	'/home/pi/video-recorder-player/assets/video/recordings/',
 		converted:	{
-			new:	'/home/pi/video-recorder-player/assets/video/recordings/converted/new/',
-			old:	'/home/pi/video-recorder-player/assets/video/recordings/converted/old/',
+			// new:	'/home/pi/video-recorder-player/assets/video/recordings/converted/new/',
+			// old:	'/home/pi/video-recorder-player/assets/video/recordings/converted/old/',
+			new:	'C:/wamp64/www/video-recorder-player/assets/video/recordings/converted/new/',
+			old:	'C:/wamp64/www/video-recorder-player/assets/video/recordings/converted/old/',
 		}
 		// consent:	'/home/pi/video-recorder-player/assets/video/recordings/consent/',
 		// deletable:	'/home/pi/video-recorder-player/assets/video/recordings/deletable/',
@@ -38,27 +40,14 @@ var styling	= false;
  */
 console.log('Load models');
 var Projector		= require(path.join(__dirname, paths.models, 'Projector'));
-var Audio			= require(path.join(__dirname, paths.models, 'Audio'));
-var RecordParams	= require(path.join(__dirname, paths.models, 'RecordParams'));
-var Camera			= require(path.join(__dirname, paths.models, 'Camera'));
-var VideoConverter	= require(path.join(__dirname, paths.models, 'VideoConverter'));
-var VideoPlayer		= require(path.join(__dirname, paths.models, 'VideoPlayer'));
-var Quitter			= require(path.join(__dirname, paths.models, 'Quitter'));
+// var Audio			= require(path.join(__dirname, paths.models, 'Audio'));
+// var RecordParams	= require(path.join(__dirname, paths.models, 'RecordParams'));
+// var Camera			= require(path.join(__dirname, paths.models, 'Camera'));
+// var VideoConverter	= require(path.join(__dirname, paths.models, 'VideoConverter'));
+// var VideoPlayer		= require(path.join(__dirname, paths.models, 'VideoPlayer'));
+// var Quitter			= require(path.join(__dirname, paths.models, 'Quitter'));
 Projector.init(dirs.bin, dirs.video.converted);
 return;
-/* Projector.project({
-	// fileName: '20180114-233353-consent.mp4',
-	// fileName: '20180114-233353-consent.mp4',
-	// fileName: '20180114-235735-no-consent.mp4',
-	// dir:		dirs.video.converted,
-	successCB:	function(){
-		console.log('success');
-	},
-	errorCB:	function(error){
-		console.log('error: ' + error);
-	}
-}); */
-// return;
 // Audio.init(dirs.bin, dirs.audio);
 Camera.init(dirs.bin, dirs.video.recordings);
 VideoConverter.init(dirs.bin, dirs.video.recordings, dirs.video.converted.new);
