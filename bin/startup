@@ -1,6 +1,19 @@
 #!/bin/bash
-echo "#bash - executing shutdown"
-./shutdown
+echo "#bash - executing startup"
+echo "#bash - killing node"
+killall node
+echo "#bash - killing chrome"
+killall chromium-browser
+echo "#bash - killing omxplayer"
+killall omxplayer
+killall omxplayer.bin
+echo "#bash - killing MP4Box"
+killall MP4Box
+echo "#bash - killing raspivid"
+killall raspivid
+echo "#bash - killing mpg123"
+killall mpg123
+killall mpg123.bin
 echo "#bash - starting node"
 # add & to the end of your command to tell bash to fork the process off in the background
 node /home/pi/video-recorder-player/app.js &

@@ -22,10 +22,10 @@ var dirs	= {
 	video:	{
 		recordings:	'/home/pi/video-recorder-player/assets/video/recordings/',
 		converted:	{
-			// new:	'/home/pi/video-recorder-player/assets/video/recordings/converted/new/',
-			// old:	'/home/pi/video-recorder-player/assets/video/recordings/converted/old/',
-			new:	'C:/wamp64/www/video-recorder-player/assets/video/recordings/converted/new/',
-			old:	'C:/wamp64/www/video-recorder-player/assets/video/recordings/converted/old/',
+			new:	'/home/pi/video-recorder-player/assets/video/recordings/converted/new/',
+			old:	'/home/pi/video-recorder-player/assets/video/recordings/converted/old/',
+			// new:	'C:/wamp64/www/video-recorder-player/assets/video/recordings/converted/new/',
+			// old:	'C:/wamp64/www/video-recorder-player/assets/video/recordings/converted/old/',
 		}
 		// consent:	'/home/pi/video-recorder-player/assets/video/recordings/consent/',
 		// deletable:	'/home/pi/video-recorder-player/assets/video/recordings/deletable/',
@@ -34,25 +34,25 @@ var dirs	= {
 };
 var styling	= false;
 // var styling	= true;
+var stylingTimeout = 1000;
 
 /**
  * Load models
  */
 console.log('Load models');
 var Projector		= require(path.join(__dirname, paths.models, 'Projector'));
-// var Audio			= require(path.join(__dirname, paths.models, 'Audio'));
-// var RecordParams	= require(path.join(__dirname, paths.models, 'RecordParams'));
-// var Camera			= require(path.join(__dirname, paths.models, 'Camera'));
-// var VideoConverter	= require(path.join(__dirname, paths.models, 'VideoConverter'));
-// var VideoPlayer		= require(path.join(__dirname, paths.models, 'VideoPlayer'));
-// var Quitter			= require(path.join(__dirname, paths.models, 'Quitter'));
+var Audio			= require(path.join(__dirname, paths.models, 'Audio'));
+var RecordParams	= require(path.join(__dirname, paths.models, 'RecordParams'));
+var Camera			= require(path.join(__dirname, paths.models, 'Camera'));
+var VideoConverter	= require(path.join(__dirname, paths.models, 'VideoConverter'));
+var VideoPlayer		= require(path.join(__dirname, paths.models, 'VideoPlayer'));
+var VideoQuitter	= require(path.join(__dirname, paths.models, 'VideoQuitter'));
 Projector.init(dirs.bin, dirs.video.converted);
-return;
-// Audio.init(dirs.bin, dirs.audio);
+Audio.init(dirs.bin, dirs.audio);
 Camera.init(dirs.bin, dirs.video.recordings);
 VideoConverter.init(dirs.bin, dirs.video.recordings, dirs.video.converted.new);
 VideoPlayer.init(dirs.bin);
-Quitter.init(dirs.bin);
+VideoQuitter.init(dirs.bin);
 // return;
 
 // app settings
@@ -114,6 +114,16 @@ function getTimeoutSeconds(){
 	return timeoutMins * 60 * 1000;
 }
 
+/* console.log('Server');
+var server = app.listen(port, function(){
+	console.log('Start server');
+	var host = server.address().address || 'localhost'
+	var port = server.address().port
+});
+server.setTimeout(getTimeoutSeconds());
+module.exports = app;
+return; */
+
 /**
  * Routes
  */
@@ -141,7 +151,7 @@ app.post('/camera/preview/:consent', function(req, res, next){
 					}
 				});
 			}
-		}, 9000);
+		}, stylingTimeout);
 	}else{
 		Camera.preview({
 			errorCB:	function(error){
@@ -185,7 +195,7 @@ app.post('/camera/record', function(req, res, next){
 					}
 				});
 			}
-		}, 9000);
+		}, stylingTimeout);
 	}else{
 		Camera.record({
 			errorCB:	function(error){
@@ -229,7 +239,7 @@ app.post('/video/convert', function(req, res, next){
 					}
 				});
 				}
-		}, 5000);
+		}, stylingTimeout);
 	}else{
 		VideoConverter.convert({
 			fileName:	RecordParams.getVideo(),
@@ -274,7 +284,7 @@ app.post('/video/play', function(req, res, next){
 					}
 				});
 			}
-		}, 5000);
+		}, stylingTimeout);
 	}else{
 		VideoPlayer.play({
 			fileName:	RecordParams.getVideo(),
@@ -402,7 +412,7 @@ app.post('/quit', function(req, res, next){
 			});
 		}
 	}else{
-		Quitter.quit({
+		VideoQuitter.quit({
 			errorCB:	function(error){
 				console.log('/quit - errorCB');
 				console.log(error);
