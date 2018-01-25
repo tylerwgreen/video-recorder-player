@@ -1,8 +1,8 @@
 var execFile	= require('child_process').execFile;
 var fs			= require('fs');
 
-var Projector		= {
-	params:	{
+var Projector = {
+	params: {
 		binDir:		null,
 		videosDirs:	null,
 		initWait:	5000,	// time to wait for files to arrive in videos.dirs.old during init
@@ -10,13 +10,14 @@ var Projector		= {
 		// initWait:	1000,	// time to wait for files to arrive in videos.dirs.old during init
 		// newWait:	1000,	// time to wait to check for new files in videos.dirs.new
 	},
-	init:		function(binDir, videosDirs){
+	init: function(binDir, videosDirs){
 		console.log('Projector.init');
 		console.log('Projector.init | binDir', binDir);
 		console.log('Projector.init | videosDirs', videosDirs);
 		this.params.binDir		= binDir;
 		this.params.videosDirs	= videosDirs;
 		this.files.init(Projector.projectRandom);
+		this.files.checkNewTimerInit();
 		// this.testRandomization();
 	},
 	testRandomization: function(){
@@ -29,7 +30,7 @@ var Projector		= {
 			}
 		});
 	},
-	projectRandom:	function(){
+	projectRandom: function(){
 		console.log('Projector.project');
 		if(true === Projector.files.hasNew()){
 			var file = Projector.files.getNew();
@@ -43,15 +44,9 @@ var Projector		= {
 			Projector.params.binDir + 'projector-project',
 			[file],
 			function(error, stdout, stderr){
-// console.log('Projector.project | error: ' + error);
-// console.log('Projector.project | stderr: ' + stderr);
-// console.log('Projector.project | stdout: ' + stdout);
 				if(error){
 					console.log('Projector.project | Projector.project.error.stderr: ' + stderr);
 					throw new Error(error);
-				// }else if(null !== stderr){
-					// console.log('Projector.project | Projector.project.stderr: ' + stderr);
-					// throw new Error(stderr);
 				}else{
 					console.log('Projector.project | Projector.project.success.stdout: ' + stdout);
 					Projector.projectRandom();
@@ -59,19 +54,15 @@ var Projector		= {
 			}
 		);
 	},
-	files:	{
+	files: {
 		file:	null,
 		files:	{
 			all:		[],
 			new:		[],
 			available:	[],
 		},
-		initialized: false,
 		init:	function(callback){
 			console.log('Projector.files.init');
-			if(true === Projector.files.initialized)
-				return;
-			Projector.files.checkNewTimerInit();
 			// search for existing files in old dir
 			fs.readdir(Projector.params.videosDirs.old, (err, files) => {
 				console.log('Projector.files.init | Read files: ', files);
@@ -88,10 +79,16 @@ var Projector		= {
 					console.log('Projector.files.init | files.length: ' + files.length);
 					files.forEach(function(file, err){
 						console.log('Projector.files.init | its: ' + its);
-						Projector.files.files.all.push(file);
+						// the first file could be in files.new, then added here, so check for existing files
+						var existingIndex = Projector.files.files.all.indexOf(file);
+						if(existingIndex >= 0){
+							console.log('Projector.files.init | ' + file + ' already exists in files.all at index: ' + existingIndex);
+						}else{
+							console.log('Projector.files.init | adding file ' + file + ' to end of files.all');
+							Projector.files.files.all.push(file);
+						}
 						if(its >= files.length){
 							console.log('Projector.files.init | starting projection', Projector.files.files.all);
-							Projector.files.initialized = true;
 							callback();
 						}else{
 							its++;
@@ -100,12 +97,12 @@ var Projector		= {
 				}
 			});
 		},
-		checkNewTimerInit:	function(){
+		checkNewTimerInit: function(){
 			console.log('Projector.files.checkNewTimerInit');
 			Projector.files.addNew();
 			setInterval(Projector.files.addNew, Projector.params.newWait);
 		},
-		addNew:		function(){
+		addNew: function(){
 			console.log('Projector.files.addNew');
 			fs.readdir(Projector.params.videosDirs.new, (err, files) => {
 				if(err){
@@ -114,33 +111,40 @@ var Projector		= {
 					console.log('Projector.files.addNew | No new files to add');
 				}else{
 					files.forEach(function(file){
-						console.log('Projector.files.addNew | moving file ' + file + ' to old dir');
+						console.log('Projector.files.addNew | moving file ' + file + ' to videosDirs.old');
 						fs.rename(Projector.params.videosDirs.new + file, Projector.params.videosDirs.old + file, function(){
-							console.log('Projector.files.addNew | adding file ' + file + ' to end of all arr');
+							console.log('Projector.files.addNew | adding file ' + file + ' to end of files.all');
 							Projector.files.files.all.push(file);
-							console.log('Projector.files.addNew | adding file ' + file + ' to end of new arr');
+							console.log('Projector.files.addNew | adding file ' + file + ' to end of files.new');
 							Projector.files.files.new.push(file);
 						});
 					});
 				}
 			});
 		},
-		hasNew:	function(){
+		hasNew: function(){
 			// console.log('Projector.files.hasNew');
 			return Projector.files.files.new.length > 0 ? true : false;
 		},
-		getNew:	function(){
+		getNew: function(){
 			// console.log('Projector.files.getNew');
 			if(false === Projector.files.hasNew())
 				throw new Error('Projector.files.getNew | No new files available');
 			var file = Projector.files.files.new[0];
 			Projector.files.file	= file;
-			console.log('Projector.files.getNew | Removing file ' + file + ' from new arr');
+			console.log('Projector.files.getNew | Removing file ' + file + ' from files.new');
 			Projector.files.files.new.splice(0, 1);
 			return Projector.params.videosDirs.old + file;
 		},
-		random:	function(){
+// randI: 0,
+		random: function(){
 			console.log('Projector.files.random');
+// console.log('Projector.files.random', Projector.files.randI);
+// if(Projector.files.randI >= 10)
+	// throw new Error('Too many its');
+// Projector.files.randI++;
+// console.log('Projector.files.random | files.all: ', Projector.files.files.all);
+// console.log('Projector.files.random | files.available: ', Projector.files.files.available);
 			if(Projector.files.files.available.length <= 0){
 				console.log('Projector.files.random | all available files have been played, copy all into available');
 				Projector.files.files.available = Projector.files.files.all.slice(0);
@@ -148,16 +152,16 @@ var Projector		= {
 			var file		= Projector.files.files.available[Math.floor(Math.random() * Projector.files.files.available.length)];
 			if(typeof file === 'undefined')
 				throw new Error('Projector.files.random | No files available in all arr, app was not properly initialized');
-			var fileIndex	= Projector.files.files.available.indexOf(file);
 			if(
 					file === Projector.files.file
-				// &&	Projector.files.files.available.length > 1
+				&&	Projector.files.files.available.length > 1
 			){
-				console.log('Projector.files.random | files.available.length: ' + Projector.files.files.available.length);
+				// console.log('Projector.files.random | files.available.length: ' + Projector.files.files.available.length);
 				console.log('Projector.files.random | file ' + file + ' was the previously played file, find another random file');
 				return Projector.files.random();
 			}
 			console.log('Projector.files.random | removing file ' + file + ' from available arr');
+			var fileIndex	= Projector.files.files.available.indexOf(file);
 			Projector.files.files.available.splice(fileIndex, 1);
 			Projector.files.file	= file;
 			return Projector.params.videosDirs.old + file;

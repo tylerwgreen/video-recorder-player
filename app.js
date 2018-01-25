@@ -41,19 +41,19 @@ var stylingTimeout = 1000;
  */
 console.log('Load models');
 var Projector		= require(path.join(__dirname, paths.models, 'Projector'));
-var Audio			= require(path.join(__dirname, paths.models, 'Audio'));
-var RecordParams	= require(path.join(__dirname, paths.models, 'RecordParams'));
-var Camera			= require(path.join(__dirname, paths.models, 'Camera'));
-var VideoConverter	= require(path.join(__dirname, paths.models, 'VideoConverter'));
-var VideoPlayer		= require(path.join(__dirname, paths.models, 'VideoPlayer'));
-var VideoQuitter	= require(path.join(__dirname, paths.models, 'VideoQuitter'));
+// var Audio			= require(path.join(__dirname, paths.models, 'Audio'));
+// var RecordParams	= require(path.join(__dirname, paths.models, 'RecordParams'));
+// var Camera			= require(path.join(__dirname, paths.models, 'Camera'));
+// var VideoConverter	= require(path.join(__dirname, paths.models, 'VideoConverter'));
+// var VideoPlayer		= require(path.join(__dirname, paths.models, 'VideoPlayer'));
+// var VideoQuitter	= require(path.join(__dirname, paths.models, 'VideoQuitter'));
 Projector.init(dirs.bin, dirs.video.converted);
-Audio.init(dirs.bin, dirs.audio);
-Camera.init(dirs.bin, dirs.video.recordings);
-VideoConverter.init(dirs.bin, dirs.video.recordings, dirs.video.converted.new);
-VideoPlayer.init(dirs.bin);
-VideoQuitter.init(dirs.bin);
-// return;
+// Audio.init(dirs.bin, dirs.audio);
+// Camera.init(dirs.bin, dirs.video.recordings);
+// VideoConverter.init(dirs.bin, dirs.video.recordings, dirs.video.converted.new);
+// VideoPlayer.init(dirs.bin);
+// VideoQuitter.init(dirs.bin);
+return;
 
 // app settings
 /**
