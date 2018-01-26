@@ -10,12 +10,10 @@ var Projector = {
 		// initWait:	1000,	// time to wait for files to arrive in videos.dirs.old during init
 		// newWait:	1000,	// time to wait to check for new files in videos.dirs.new
 	},
-	init: function(binDir, videosDirs){
-		console.log('Projector.init');
-		console.log('Projector.init | binDir', binDir);
-		console.log('Projector.init | videosDirs', videosDirs);
-		this.params.binDir		= binDir;
-		this.params.videosDirs	= videosDirs;
+	init: function(params, FTP){
+		console.log('Projector.init', params);
+		this.params = Object.assign(this.params, params);
+		this.FTP = FTP;
 		this.files.init(Projector.projectRandom);
 		this.files.checkNewTimerInit();
 		// this.testRandomization();

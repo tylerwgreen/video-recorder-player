@@ -5,10 +5,9 @@ var VideoPlayer		= {
 		binDir:			null,
 		convertedDir:	null,
 	},
-	init:	function(binDir, convertedDir){
-		console.log('VideoPlayer.init');
-		this.params.binDir = binDir;
-		this.params.convertedDir	= convertedDir;
+	init:	function(params){
+		console.log('VideoPlayer.init', params);
+		this.params = Object.assign(this.params, params);
 	},
 	play:		function(params){
 		console.log('VideoPlayer.play');
@@ -16,8 +15,7 @@ var VideoPlayer		= {
 		child		= execFile(
 			VideoPlayer.params.binDir + 'video-play',
 			[
-				VideoPlayer.params.convertedDir,
-				params.fileName
+				VideoPlayer.params.convertedDir + params.fileName
 			],
 			function(error, stdout, stderr){
 				if(error){

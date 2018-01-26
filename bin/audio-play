@@ -2,7 +2,8 @@
 echo "#bash - Audio play audio start"
 echo "#bash - Audio play killing playback"
 killall mpg123
-# killall mpg123.bin
-echo "#bash - Audio play playing $1"
-mpg123 $1
+#killall mpg123.bin
+FILE=$1
+echo "#bash - Audio play playing $FILE"
+mpg123 $FILE
 echo "#bash - Audio play end"

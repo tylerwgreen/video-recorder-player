@@ -1,16 +1,16 @@
 #!/bin/bash
 echo ""
 echo "#bash - Projector project start"
+FILE=$1
 # DISPLAY: 5 = HDMI, 4 = LCD
 DISPLAY=5
 #DISPLAY=4
 AUDIO_OUTPUT=local
 # AUDIO_OUTPUT=hdmi
 echo "#bash - Projector project killing playback"
-killall omxplayer
-killall omxplayer.bin
-echo "#bash - Projector projecting $1"
+# killall omxplayer
+# killall omxplayer.bin
+echo "#bash - Projector projecting $FILE"
 # omxplayer -o $AUDIO_OUTPUT --display=$DISPLAY --loop -local --no-osd $1
-# omxplayer -o $AUDIO_OUTPUT --display=$DISPLAY --loop -local --no-osd $1
-omxplayer -o $AUDIO_OUTPUT --display=$DISPLAY $1
+omxplayer -o $AUDIO_OUTPUT --display=$DISPLAY $FILE
 echo "#bash - Projector project end"

@@ -1,12 +1,13 @@
 #!/bin/bash
 echo "#bash - Video convert start"
-FILE_DIR=$1
+FILE_DIR_RECORDINGS=$1
 FILE_DIR_CONVERTED=$2
-FILE_RECORDING=$FILE_DIR/recording.h264
-FILE_CONVERTING=$FILE_DIR/converting.h264
+FILE_NAME=$3
+FILE_RECORDING=$FILE_DIR_RECORDINGS/recording.h264
+FILE_CONVERTING=$FILE_DIR_RECORDINGS/converting.h264
 # the incoming filename will be .mp4, MP4Box was failing to convert .mp4 files
 #   all files were given the .h264 extesion before this point
-FILE_CONVERTED=$FILE_DIR_CONVERTED/$3
+FILE_CONVERTED=$FILE_DIR_CONVERTED/$FILE_NAME
 echo "#bash - Converting $FILE_RECORDING to $FILE_CONVERTED via $FILE_CONVERTING"
 MP4Box -add $FILE_RECORDING#video -raw 1 -new $FILE_CONVERTING
 MP4Box -add $FILE_CONVERTING:fps=24 -new $FILE_CONVERTED

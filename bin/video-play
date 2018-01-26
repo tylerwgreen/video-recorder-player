@@ -1,7 +1,6 @@
 #!/bin/bash
 echo "#bash - Video play start"
-FILE_DIR_CONVERTED=$1
-FILE=$FILE_DIR_CONVERTED/$2
+FILE=$1
 #HDMI
 #DISPLAY=5
 #LCD

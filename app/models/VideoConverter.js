@@ -6,11 +6,9 @@ var VideoConverter		= {
 		recordingsDir:	null,
 		convertedDir:	null,
 	},
-	init:	function(binDir, recordingsDir, convertedDir){
-		console.log('VideoConverter.init');
-		this.params.binDir			= binDir;
-		this.params.recordingsDir	= recordingsDir;
-		this.params.convertedDir	= convertedDir;
+	init:	function(params){
+		console.log('VideoConverter.init', params);
+		this.params = Object.assign(this.params, params);
 	},
 	convert:	function(params){
 		console.log('VideoConverter.convert');

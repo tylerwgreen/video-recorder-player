@@ -6,13 +6,11 @@ var Audio		= {
 		binDir:		null,
 		audioDir:	null,
 	},
-	init:	function(binDir, audioDir){
-		console.log('Audio.init');
-		// set params
-		this.params.binDir = binDir;
-		this.params.audioDir = audioDir;
-		// this.testRandomization();
+	init:	function(params){
+		console.log('Audio.init', params);
+		this.params = Object.assign(this.params, params);
 		this.files.init(Audio.playRandom);
+		// this.testRandomization();
 	},
 	testRandomization: function(){
 		this.files.init(function(){

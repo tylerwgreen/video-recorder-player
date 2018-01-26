@@ -1,0 +1,5 @@
+#!/bin/bash
+echo "#bash - Quitter start"
+echo "#bash - Quitting raspivid"
+killall raspivid
+echo "#bash - Quitter end"

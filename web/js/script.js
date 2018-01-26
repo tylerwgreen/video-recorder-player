@@ -1,23 +1,24 @@
 jQuery(function($){
 	var app	= {
-		debug:	true,
 		params:	{
-			ajaxBase:	'http://127.0.0.1:5000/',
-			timeoutMins:	61, // +1 from server timeout
+			debug:		false,
+			ajaxBase:	null,
+			timeoutMins:	null, // +1 from server timeout
 			preview:	{
-				duration:	9,	// seconds
+				duration:	null,	// seconds
 			},
 			record:		{
-				duration:	9,	// seconds
+				duration:	null,	// seconds
 			},
 			finish:		{
 				wait:	{
-					duration:	9,	// seconds
+					duration:	null,	// seconds
 				}
 			}
 		},
-		init:	function(){
-			console.log('init');
+		init:	function(params){
+			console.log('init', params);
+			this.params = Object.assign(this.params, params);
 			app.consent.init();
 			app.info.init();
 			app.preview.init();
@@ -702,5 +703,5 @@ jQuery(function($){
 			},
 		}
 	};
-	app.init();
+	app.init(params);
 });

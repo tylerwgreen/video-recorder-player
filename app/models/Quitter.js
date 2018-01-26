@@ -1,25 +1,25 @@
 var execFile	= require('child_process').execFile;
 
-var VideoQuitter		= {
+var Quitter		= {
 	params:	{
 		binDir:		null,
 	},
-	init:	function(binDir){
-		console.log('VideoQuitter.init');
-		this.params.binDir = binDir;
+	init:	function(params){
+		console.log('Quitter.init', params);
+		this.params = Object.assign(this.params, params);
 	},
 	quit:		function(params){
-		console.log('VideoQuitter.quit');
+		console.log('Quitter.quit');
 		child = execFile(
-			VideoQuitter.params.binDir + 'video-quitter',
+			Quitter.params.binDir + 'quitter',
 			[],
 			function(error, stdout, stderr){
 				if(error){
-					console.log('VideoQuitter.quit.error.stderr: ' + stderr);
+					console.log('Quitter.quit.error.stderr: ' + stderr);
 					if(typeof params.errorCB !== 'undefined')
 						params.errorCB(error);
 				}else{
-					console.log('VideoQuitter.quit.success.stdout: ' + stdout);
+					console.log('Quitter.quit.success.stdout: ' + stdout);
 					if(typeof params.successCB !== 'undefined')
 						params.successCB();
 				}
@@ -27,4 +27,4 @@ var VideoQuitter		= {
 		);
 	}
 };
-module.exports = VideoQuitter;
+module.exports = Quitter;

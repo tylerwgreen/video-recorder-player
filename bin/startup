@@ -13,7 +13,7 @@ echo "#bash - killing raspivid"
 killall raspivid
 echo "#bash - killing mpg123"
 killall mpg123
-killall mpg123.bin
+#killall mpg123.bin
 echo "#bash - starting node"
 # add & to the end of your command to tell bash to fork the process off in the background
 node /home/pi/video-recorder-player/app.js &

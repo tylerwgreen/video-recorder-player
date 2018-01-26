@@ -32,6 +32,14 @@ var dirs	= {
 		// noConsent:	'/home/pi/video-recorder-player/assets/video/recordings/no-consent/',
 	}
 };
+var durations = {
+	preview: 9000,
+	record: 9000,
+	finish: 9000
+	// preview: 1000,
+	// record: 1000,
+	// finish: 1000
+};
 var styling	= false;
 // var styling	= true;
 var stylingTimeout = 1000;
@@ -40,45 +48,70 @@ var stylingTimeout = 1000;
  * Load models
  */
 console.log('Load models');
+// var FTP				= require(path.join(__dirname, paths.models, 'FTP'));
+var FTP				= null;
 var Projector		= require(path.join(__dirname, paths.models, 'Projector'));
-// var Audio			= require(path.join(__dirname, paths.models, 'Audio'));
-// var RecordParams	= require(path.join(__dirname, paths.models, 'RecordParams'));
-// var Camera			= require(path.join(__dirname, paths.models, 'Camera'));
-// var VideoConverter	= require(path.join(__dirname, paths.models, 'VideoConverter'));
-// var VideoPlayer		= require(path.join(__dirname, paths.models, 'VideoPlayer'));
-// var VideoQuitter	= require(path.join(__dirname, paths.models, 'VideoQuitter'));
-Projector.init(dirs.bin, dirs.video.converted);
-// Audio.init(dirs.bin, dirs.audio);
-// Camera.init(dirs.bin, dirs.video.recordings);
-// VideoConverter.init(dirs.bin, dirs.video.recordings, dirs.video.converted.new);
-// VideoPlayer.init(dirs.bin);
-// VideoQuitter.init(dirs.bin);
-return;
+var Audio			= require(path.join(__dirname, paths.models, 'Audio'));
+var RecordParams	= require(path.join(__dirname, paths.models, 'RecordParams'));
+var Camera			= require(path.join(__dirname, paths.models, 'Camera'));
+var VideoConverter	= require(path.join(__dirname, paths.models, 'VideoConverter'));
+var VideoPlayer		= require(path.join(__dirname, paths.models, 'VideoPlayer'));
+var Quitter			= require(path.join(__dirname, paths.models, 'Quitter'));
+/* FTP.init({
+}); */
+Projector.init({
+	binDir: dirs.bin,
+	videosDirs: dirs.video.converted
+}, FTP);
+Audio.init({
+	binDir: dirs.bin,
+	audioDir: dirs.audio
+});
+Camera.init({
+	binDir: dirs.bin,
+	recordingsDir: dirs.video.recordings,
+	previewDuration: durations.preview,
+	recordDuration: durations.record
+});
+VideoConverter.init({
+	binDir: dirs.bin,
+	recordingsDir: dirs.video.recordings,
+	convertedDir: dirs.video.converted.new
+});
+VideoPlayer.init({
+	binDir:			dirs.bin,
+	convertedDir:	dirs.video.converted.new
+});
+Quitter.init({
+	binDir: dirs.bin
+});
 
 // app settings
 /**
  * App Settings
  */
 console.log('App Settings');
-var port		= 5000
-var logger		= {
-	debug:		true,
-	// debug:		false,
-	// format:		'combined',	// DEFAULT - Standard Apache combined log output.
-	// format:		'tiny',		// The minimal output.
-	format:		'dev',		// Concise output colored by response status for development use.
-	options:	{
+var protocol = 'http://';
+var address = '127.0.0.1';
+var port = 5000;
+var logger = {
+	debug: true,
+	// debug: false,
+	// format: 'combined',	// DEFAULT - Standard Apache combined log output.
+	// format: 'tiny',		// The minimal output.
+	format: 'dev',		// Concise output colored by response status for development use.
+	options: {
 		skip: function(req, res){
 			// only log error responses
 			if(!logger.debug)
 				return res.statusCode < 400
 		},
 	},
-	stream:		{
-		file:		'access.log',
-		config:		{
-			interval:	'1d', // rotate daily 
-			path:		path.join(__dirname, paths.logs),
+	stream: {
+		file: 'access.log',
+		config: {
+			interval: '1d', // rotate daily 
+			path: path.join(__dirname, paths.logs),
 		}
 	},
 }
@@ -114,16 +147,6 @@ function getTimeoutSeconds(){
 	return timeoutMins * 60 * 1000;
 }
 
-/* console.log('Server');
-var server = app.listen(port, function(){
-	console.log('Start server');
-	var host = server.address().address || 'localhost'
-	var port = server.address().port
-});
-server.setTimeout(getTimeoutSeconds());
-module.exports = app;
-return; */
-
 /**
  * Routes
  */
@@ -132,6 +155,27 @@ console.log('Routes');
 app.use(express.static(path.join(__dirname, paths.web)));
 app.get('/', function(req, res, next){
 	res.sendFile(path.join(__dirname, paths.views, 'index.html'));
+});
+app.get('/js/inline.js', function(req, res, next){
+	console.log(server.address());
+	var params = {
+		debug: false,
+		ajaxBase: protocol + (server.address().address || 'localhost') + ':' + server.address().port + '/',
+		timeoutMins: timeoutMins + 1, // +1 from server timeout
+		preview: {
+			duration: durations.preview / 1000,	// seconds
+		},
+		record: {
+			duration: durations.record / 1000,	// seconds
+		},
+		finish: {
+			wait: {
+				duration: durations.finish / 1000,	// seconds
+			}
+		}
+	};
+	console.log('inline.js', params);
+	res.send('var params = ' + JSON.stringify(params));
 });
 app.post('/camera/preview/:consent', function(req, res, next){
 	console.log('ROUTE: /camera/preview');
@@ -185,9 +229,9 @@ app.post('/camera/record', function(req, res, next){
 	console.log(req.params);
 	if(styling){
 		setTimeout(function(){
-			console.log('/camera/preview - success');
+			console.log('/camera/record - success');
 			if(res.headersSent){
-					res.end('{errors:"error"}');
+				res.end('{errors:"error"}');
 			}else{
 				res.json({
 					data:	{
@@ -229,7 +273,7 @@ app.post('/video/convert', function(req, res, next){
 	console.log(req.params);
 	if(styling){
 		setTimeout(function(){
-			console.log('/camera/preview - success');
+			console.log('/video/convert - success');
 			if(res.headersSent){
 				res.end('{errors:"error"}');
 			}else{
@@ -274,7 +318,7 @@ app.post('/video/play', function(req, res, next){
 	console.log(req.params);
 	if(styling){
 		setTimeout(function(){
-			console.log('/camera/preview - success');
+			console.log('/video/play - success');
 			if(res.headersSent){
 				res.end('{errors:"error"}');
 			}else{
@@ -287,7 +331,9 @@ app.post('/video/play', function(req, res, next){
 		}, stylingTimeout);
 	}else{
 		VideoPlayer.play({
-			fileName:	RecordParams.getVideo(),
+			// fileName:	RecordParams.getVideo(),
+			// suppress playback since it messes with projection
+			fileName:	null,
 			errorCB:	function(error){
 				console.log('/video/play - errorCB');
 				console.log(error);
@@ -314,10 +360,12 @@ app.post('/video/play', function(req, res, next){
 		});
 	}
 });
+// it is not ideal to stop all videos, but if 'finished' is tapped, it is necessary to stop all videos so the ui can be reset, this will cause a new video to be projected :(
 app.post('/video/stop', function(req, res, next){
 	console.log('ROUTE: /video/stop');
 	console.log(req.params);
 	if(styling){
+		console.log('/video/stop - success');
 		if(res.headersSent){
 			res.end('{errors:"error"}');
 		}else{
@@ -360,6 +408,7 @@ app.post('/video/delete', function(req, res, next){
 	console.log('ROUTE: /video/delete');
 	console.log(req.params);
 	if(styling){
+		console.log('/video/delete - success');
 		if(res.headersSent){
 			res.end('{errors:"error"}');
 		}else{
@@ -402,6 +451,7 @@ app.post('/quit', function(req, res, next){
 	console.log('ROUTE: /quit');
 	// console.log(req.params);
 	if(styling){
+		console.log('/quit - success');
 		if(res.headersSent){
 			res.end('{errors:"error"}');
 		}else{
@@ -412,7 +462,7 @@ app.post('/quit', function(req, res, next){
 			});
 		}
 	}else{
-		VideoQuitter.quit({
+		Quitter.quit({
 			errorCB:	function(error){
 				console.log('/quit - errorCB');
 				console.log(error);
@@ -479,7 +529,7 @@ app.use(function(err, req, res, next){
  * Server
  */
 console.log('Server');
-var server = app.listen(port, function(){
+var server = app.listen(port, address, function(){
 	console.log('Start server');
 	var host = server.address().address || 'localhost'
 	var port = server.address().port

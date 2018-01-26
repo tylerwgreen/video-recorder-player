@@ -1,20 +1,21 @@
 var execFile	= require('child_process').execFile;
 
-var Camera		= {
+var Camera = {
 	params:	{
-		binDir:			null,
-		recordingsDir:	null,
+		binDir: null,
+		recordingsDir: null,
+		previewDuration: null,
+		recordDuration: null
 	},
-	init:	function(binDir, recordingsDir){
-		console.log('Camera.init');
-		this.params.binDir = binDir;
-		this.params.recordingsDir = recordingsDir;
+	init: function(params){
+		console.log('Camera.init', params);
+		this.params = Object.assign(this.params, params);
 	},
-	preview:	function(params){
+	preview: function(params){
 		console.log('Camera.preview');
 		child		= execFile(
 			Camera.params.binDir + 'camera-preview',
-			[Camera.params.recordingsDir],
+			[Camera.params.recordingsDir, Camera.params.previewDuration],
 			function(error, stdout, stderr){
 				if(error){
 					console.log('Camera.preview.error.stderr: ' + stderr);
@@ -26,11 +27,11 @@ var Camera		= {
 			}
 		);
 	},
-	record:		function(params){
+	record: function(params){
 		console.log('Camera.record');
 		child		= execFile(
 			Camera.params.binDir + 'camera-record',
-			[Camera.params.recordingsDir],
+			[Camera.params.recordingsDir, Camera.params.recordDuration],
 			function(error, stdout, stderr){
 				if(error){
 					console.log('Camera.record.error.stderr: ' + stderr);
