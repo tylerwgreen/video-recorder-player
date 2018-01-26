@@ -24,7 +24,6 @@ jQuery(function($){
 			app.preview.init();
 			app.record.init();
 			app.convert.init();
-			app.finish.init();
 			app.error.init();
 // app.consent.events.hide();
 // app.preview.events.preview.start();
@@ -370,7 +369,7 @@ jQuery(function($){
 						console.log('convert.events.convert.end');
 						app.convert.events.hide();
 						app.utils.timer.stop();
-						app.finish.events.play.start();
+						app.quit(true);
 					}
 				},
 				show:	function(){
@@ -386,155 +385,6 @@ jQuery(function($){
 					app.convert.ui.timer.update(text);
 				}
 			},
-		},
-		finish:	{
-			init:	function(){
-				console.log('finish.init');
-				this.ui.init();
-			},
-			ui:	{
-				wrap:				null,
-				videoPlaceholder:	null,
-				countdownWrap:		null,
-				countdownText:		null,
-				finishDeleteBtn:	null,
-				finishDoneBtn:		null,
-				init:	function(){
-					console.log('finish.ui.init');
-					this.wrap				= $('#finish-wrap');
-					this.videoPlaceholder	= $('#finish-video-placeholder');
-					this.countdownWrap		= $('#finish-countdown-wrap');
-					this.countdownText		= $('#finish-countdown-text');
-					this.finishDeleteBtn	= $('#finish-delete-btn')
-						.on('click', app.finish.events.delete);
-					this.finishDoneBtn		= $('#finish-done-btn')
-						.on('click', app.finish.events.play.stop);
-				},
-				timer:	{
-					update:	function(text){
-						app.finish.ui.countdownText.text(text);
-					}
-				},
-				countdown:	{
-					update:	function(countdown){
-						app.finish.ui.countdownText.text(countdown);
-						if(countdown <= 0)
-							app.finish.events.play.end();
-					}
-				},
-				hide:	function(){
-					console.log('finish.ui.hide');
-					this.wrap.removeClass('visible');
-				},
-				show:	function(){
-					console.log('finish.ui.show');
-					this.wrap.addClass('visible');
-					this.videoPlaceholder.removeClass('hidden');
-					this.countdownWrap.removeClass('visible');
-				},
-				hideVideo:	function(){
-					console.log('finish.ui.show');
-					this.videoPlaceholder.addClass('hidden');
-					this.countdownWrap.addClass('visible');
-				},
-			},
-			events:	{
-				play:	{
-					start:	function(){
-						console.log('finish.events.play.start');
-						app.finish.events.show();
-						// app.utils.timer.start(
-							// app.finish.events.updateTimer
-						// );
-						$.ajax({
-							method:		'POST',
-							url:		app.params.ajaxBase + 'video/play',
-							timeout:	app.utils.getTimeoutSeconds(),
-						})
-							.done(function(data, textStatus, jqXHR){
-								console.log('data',			data);
-								if(app.utils.isValidJqXHR(jqXHR))
-									app.finish.events.wait();
-								else
-									app.error.raise('Invalid jqXHR');
-							})
-							.fail(function(jqXHR, textStatus, errorThrown){
-								app.error.raise(app.utils.getJqXHRError(jqXHR));
-							});
-					},
-					stop:	function(){
-						console.log('finish.events.play.stop');
-						app.finish.events.show();
-						$.ajax({
-							method:		'POST',
-							url:		app.params.ajaxBase + 'video/stop',
-							timeout:	app.utils.getTimeoutSeconds(),
-						})
-							.done(function(data, textStatus, jqXHR){
-								console.log('data',			data);
-								if(app.utils.isValidJqXHR(jqXHR))
-									app.finish.events.play.end();
-								else
-									app.error.raise('Invalid jqXHR');
-							})
-							.fail(function(jqXHR, textStatus, errorThrown){
-								app.error.raise(app.utils.getJqXHRError(jqXHR));
-							});
-					},
-					end:	function(){
-						console.log('finish.events.play.end');
-						app.finish.events.hide();
-						app.quit(true);
-					},
-				},
-				wait:	function(){
-					console.log('finish.events.wait');
-					app.finish.events.hideVideo();
-					app.utils.timer.reset();
-					app.utils.timerCountdown.start(
-						app.params.finish.wait.duration,
-						app.finish.events.updateCountdown
-					);
-				},
-				delete:	function(){
-					console.log('finish.events.delete');
-					$.ajax({
-						method:		'POST',
-						url:		app.params.ajaxBase + 'video/delete',
-						timeout:	app.utils.getTimeoutSeconds(),
-					})
-						.done(function(data, textStatus, jqXHR){
-							console.log('data',			data);
-							if(app.utils.isValidJqXHR(jqXHR))
-								app.finish.events.play.end();
-							else
-								app.error.raise('Invalid jqXHR');
-						})
-						.fail(function(jqXHR, textStatus, errorThrown){
-							app.error.raise(app.utils.getJqXHRError(jqXHR));
-						});
-				},
-				show:	function(){
-					console.log('finish.events.show');
-					app.finish.ui.show();
-				},
-				hide:	function(){
-					console.log('finish.events.hide');
-					app.finish.ui.hide();
-				},
-				hideVideo:	function(){
-					console.log('finish.events.hideVideo');
-					app.finish.ui.hideVideo();
-				},
-				/* updateTimer:	function(text){
-					console.log('finish.events.updateTimer', text);
-					app.finish.ui.timer.update(text);
-				}, */
-				updateCountdown:	function(text){
-					console.log('finish.events.updateCountdown', text);
-					app.finish.ui.countdown.update(text);
-				},
-			}
 		},
 		error:		{
 			init:	function(){

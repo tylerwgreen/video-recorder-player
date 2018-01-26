@@ -1,10 +1,9 @@
-# Burning Man
+# Video Recorder Player
 
 ## Raspberry Pi project
 
-### Video Recorder Player
-
-- Records slow motion video and plays back slow motion video
+- Plays music while recording slow motion video that are then projected via HDMI
+- Uses chromium to display a browser based UI running on express
 
 ## Setup
 
