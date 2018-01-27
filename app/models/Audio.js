@@ -22,16 +22,19 @@ var Audio		= {
 	},
 	playRandom:	function(){
 		console.log('Audio.playRandom');
+		var file = Audio.files.random();
+		console.log('Audio.playRandom | playing file: ' + file);
 		child	= execFile(
 			Audio.params.binDir + 'audio-play',
-			[Audio.files.random()],
+			[file],
 			function(error, stdout, stderr){
 				if(error){
-					console.log('Audio.playRandom.error.stderr: ' + stderr);
-					throw new Error(stderr);
+					console.log('Audio.playRandom | error.error: ' + error);
+					console.log('Audio.playRandom | error.stderr: ' + stderr);
+					throw new Error('Audio.playRandom | ' + stderr);
 				}else{
-					console.log('Audio.playRandom.success.stdout: ' + stdout);
-					console.log('Playing another audio file');
+					console.log('Audio.playRandom | success.stdout: ' + stdout);
+					console.log('Audio.playRandom | Playing another audio file');
 					Audio.playRandom();
 				}
 			}
@@ -47,9 +50,9 @@ var Audio		= {
 			console.log('Audio.files.init');
 			fs.readdir(Audio.params.audioDir, (err, files) => {
 				if(err){
-					throw new Error(err);
+					throw new Error('Audio.files.init | ' + err);
 				}else if(files.length <= 0){
-					throw new Error('No audio files in dir');
+					throw new Error('Audio.files.init | No audio files in dir');
 				}else{
 					files.forEach(function(file){
 						Audio.files.files.all.push(file);
