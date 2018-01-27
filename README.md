@@ -35,6 +35,7 @@
   - ```sudo apt-get install vim```
   - ```sudo apt-get install mpg123```
   - ```sudo apt-get install gpac``` (MP4Box)
+  - ```npm install -g grunt-cli```
 - Update Node (see below)
 - Remove Bloatware (see below)
 - Disable Screen Saver (see below)
