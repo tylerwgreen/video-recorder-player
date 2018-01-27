@@ -73,8 +73,10 @@ Update to:
 
 [How To](https://obrienlabs.net/setup-raspberry-pi-kiosk-chromium/)
 
+Ensure ~/.config/autostart/ exists before creating symlink
+
 ```
-ln -s ~/video-recorder-player/desktop/video-recorder-player-autostart.desktop video-recorder-player-autostart.desktop
+ln -s ~/video-recorder-player/desktop/video-recorder-player-autostart.desktop ~/.config/autostart/video-recorder-player-autostart.desktop
 ```
 
 ### Set default display
