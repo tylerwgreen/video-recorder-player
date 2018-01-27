@@ -49,7 +49,7 @@
 Create symbolic links
 
 ```
-ls -s ~/video-recorder-player/desktop/video-recorder-player.desktop ~/Desktop/video-recorder-player.desktop
+ln -s ~/video-recorder-player/desktop/video-recorder-player.desktop ~/Desktop/video-recorder-player.desktop
 ```
 
 ### Disable Screen Saver
