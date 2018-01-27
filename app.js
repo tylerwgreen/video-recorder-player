@@ -14,7 +14,8 @@ var timeout	= require('connect-timeout');
  */
 console.log('Define App variables');
 var protocol = 'http://';
-var address = '127.0.0.1';
+// var address = '192.168.0.10'; // PI A for testing on desktop
+var address = '127.0.0.1'; // for production
 // var address = 'abqjournal.com';
 var port = 5000;
 var timeoutMins	= 60;
@@ -438,9 +439,9 @@ app.use(function(err, req, res, next){
  */
 console.log('Server');
 var server = app.listen(port, address, function(){
-	console.log('Start server');
 	var host = server.address().address || 'localhost'
 	var port = server.address().port
+	console.log('Server started: ' + host + ':' + port);
 });
 server.setTimeout(getTimeoutSeconds());
 module.exports = app;
