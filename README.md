@@ -28,6 +28,9 @@
       - United States, English (US)
     -WiFi Country
       - US United States
+- Update Raspbian
+  - ```sudo apt update```
+  - ```sudo apt full-upgrade```
 - Install dependencies
   - ```sudo apt-get install vim```
   - ```sudo apt-get install gpac```
@@ -81,7 +84,7 @@ rm -rf /home/pi/python_games
 [How To](http://thisdavej.com/beginners-guide-to-installing-node-js-on-a-raspberry-pi/)
 
 ```
-curl -sL https://deb.nodesource.com/setup_7.x | sudo -E bash -
+curl -sL https://deb.nodesource.com/setup_9.x | sudo -E bash -
 sudo apt install nodejs
 ```
 
