@@ -37,7 +37,9 @@
   - ```sudo apt-get install gpac``` (MP4Box)
 - Update Node (see below)
 - Remove Bloatware (see below)
-- Auto Start & Disable Screen Saver (see below)
+- Disable Screen Saver (see below)
+- Auto start (see below)
+- Set default display (see below)
 - Desktop Icons (see below)
 
 ### Desktop Icons
@@ -50,7 +52,7 @@ Create symbolic links
 ls -s ~/saguaro-man/desktop/name-of-file.desktop ~/Desktop/name-of-file.desktop
 ```
 
-### Auto Start & Disable Screen Saver
+### Disable Screen Saver
 
 [How To](https://www.raspberrypi.org/forums/viewtopic.php?f=91&t=163316)
 
@@ -65,7 +67,27 @@ Update to:
 @xset s off
 @xset -dpms
 @xset s noblank
-@/home/pi/saguaro-man/startup
+```
+
+### Auto Start
+
+[How To](https://obrienlabs.net/setup-raspberry-pi-kiosk-chromium/)
+
+```
+ln -s ~/video-recorder-player/desktop/video-recorder-player-autostart.desktop video-recorder-player-autostart.desktop
+```
+
+### Set default display
+
+```sudo vim /boot/config.txt```
+
+```
+# TWG EDITS
+
+# make hdmi default
+#display_default_lcd=0
+#make lcd default
+display_default_lcd=1
 ```
 
 ### Remove Bloatware
