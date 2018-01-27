@@ -42,6 +42,7 @@
 - Auto start (see below)
 - Set default display (see below)
 - Desktop Icons (see below)
+- Set default audio output (see below)
 
 ### Desktop Icons
 
@@ -114,6 +115,11 @@ rm -rf /home/pi/python_games
 curl -sL https://deb.nodesource.com/setup_9.x | sudo -E bash -
 sudo apt install nodejs
 ```
+### Set default audio output
+
+```sudo raspi-config```
+
+Advanced Options > Audio > Force 3.5 mm
 
 ## Notes
 
