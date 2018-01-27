@@ -9,11 +9,6 @@ jQuery(function($){
 			},
 			record:		{
 				duration:	null,	// seconds
-			},
-			finish:		{
-				wait:	{
-					duration:	null,	// seconds
-				}
 			}
 		},
 		init:	function(params){

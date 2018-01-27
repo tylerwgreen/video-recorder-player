@@ -43,12 +43,10 @@ var paths	= {
 };
 // console.log('paths', paths);
 var durations = {
-	// preview: 9000,
-	// record: 9000,
-	// finish: 9000
-	preview: 1000,
-	record: 1000,
-	finish: 1000
+	preview: 3000,
+	record: 9000
+	// preview: 1000,
+	// record: 1000
 };
 var logger = {
 	debug: true,
@@ -89,6 +87,7 @@ Projector.init({
 	binDir: paths.bin,
 	videosDirs: paths.video.converted
 });
+// return;
 Audio.init({
 	binDir: paths.bin,
 	audioDir: paths.audio
@@ -163,11 +162,6 @@ app.get('/js/inline.js', function(req, res, next){
 		},
 		record: {
 			duration: durations.record / 1000,	// seconds
-		},
-		finish: {
-			wait: {
-				duration: durations.finish / 1000,	// seconds
-			}
 		}
 	};
 	console.log('inline.js', params);
