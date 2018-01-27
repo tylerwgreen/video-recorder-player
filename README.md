@@ -7,6 +7,34 @@
 
 ## Setup
 
+### Raspberry PI
+
+- Format SD card with SD Formatter
+- Write Raspian Img with Win32DiskImager
+- Run Menu > Preferences > Raspberry Pi Configuration
+  - System
+    - Change Password
+    - Disable Splash Screen
+  - Interfaces
+    - Enable
+      - Camera
+      - SSH
+  - Localisation
+    - Locale
+      - en, US, UTF-8
+    - Timezone
+      - America, Denver
+    - Keyboard
+      - United States, English (US)
+    -WiFi Country
+      - US United States
+- Install dependencies
+  - ```sudo apt-get install vim```
+  - ```sudo apt-get install gpac```
+- Remove Bloatware (see below)
+- Auto Start & Disable Screen Saver (see below)
+- Desktop Icons (see below)
+
 ### Desktop Icons
 
 [How To](http://www.raspberry-projects.com/pi/pi-operating-systems/raspbian/gui/desktop-shortcuts)
@@ -46,12 +74,6 @@ sudo apt-get remove --purge wolfram-engine libreoffice* penguinspuzzle
 sudo apt-get autoremove
 sudo apt-get clean
 rm -rf /home/pi/python_games
-```
-
-### Dependent packages
-
-```
-sudo apt-get install gpac
 ```
 
 ### Update NodeJS
