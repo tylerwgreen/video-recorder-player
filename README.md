@@ -33,7 +33,9 @@
   - ```sudo apt full-upgrade```
 - Install dependencies
   - ```sudo apt-get install vim```
-  - ```sudo apt-get install gpac```
+  - ```sudo apt-get install mpg123```
+  - ```sudo apt-get install gpac``` (MP4Box)
+- Update Node (see below)
 - Remove Bloatware (see below)
 - Auto Start & Disable Screen Saver (see below)
 - Desktop Icons (see below)
@@ -73,7 +75,7 @@ Update to:
 [How To B](https://project.altservice.com/issues/418)
 
 ```
-sudo apt-get remove --purge wolfram-engine libreoffice* penguinspuzzle
+sudo apt-get remove --purge wolfram-engine libreoffice*
 sudo apt-get autoremove
 sudo apt-get clean
 rm -rf /home/pi/python_games
