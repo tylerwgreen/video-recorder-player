@@ -1,0 +1,17 @@
+#!/bin/bash
+echo "#bash - shutdown start"
+echo "#bash - killing node"
+killall node
+echo "#bash - killing chrome"
+killall chromium-browser
+echo "#bash - killing omxplayer"
+killall omxplayer
+killall omxplayer.bin
+echo "#bash - killing MP4Box"
+killall MP4Box
+echo "#bash - killing raspivid"
+killall raspivid
+echo "#bash - killing mpg123"
+killall mpg123
+#killall mpg123.bin
+echo "#bash - shutdown end"

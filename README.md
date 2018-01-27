@@ -65,7 +65,7 @@ Update to:
 @xset s off
 @xset -dpms
 @xset s noblank
-@/home/pi/saguaro-man/startup
+@/home/pi/video-recorder-player/bin/startup
 ```
 
 ### Remove Bloatware

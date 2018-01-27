@@ -1,0 +1,7 @@
+[Desktop Entry]
+Name=Video Recorder Player
+Exec=/home/pi/video-recorder-player/bin/startup
+Type=Application
+Encoding=UTF-8
+Terminal=true
+X-GNOME-Autostart-enabled=true
