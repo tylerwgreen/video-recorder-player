@@ -1,8 +1,8 @@
 [Desktop Entry]
 Name=Video Recorder Player
 Comment=Video Recorder Player
-Icon=/home/pi/video-recorder-player/assets/icon/video-recorder-player-icon.png
-Exec=/home/pi/video-recorder-player/bin/startup
+Icon=/home/pi/projects/video-recorder-player/assets/icon/video-recorder-player-icon.png
+Exec=/home/pi/projects/video-recorder-player/bin/startup
 Type=Application
 Encoding=UTF-8
 Terminal=true

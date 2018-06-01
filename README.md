@@ -72,3 +72,7 @@ Display resoultion: 800x480
 ## Misc
 
 Funded in part by The AZBurners Art Fund
+
+### How to play a video file from the command line
+
+omxplayer __name_of_video_file__

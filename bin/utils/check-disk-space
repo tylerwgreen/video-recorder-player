@@ -1,9 +1,0 @@
-#!/bin/bash
-DIR=/home/pi/video-recorder-player
-echo "Disk space available: "
-df -h /
-echo "Recordings space used: "
-du -h $DIR/assets/video/recordings/converted
-echo "Total recordings: "
-ls $DIR/assets/video/recordings/converted | wc -l
-$SHELL

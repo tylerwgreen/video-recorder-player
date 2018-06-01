@@ -1,8 +1,20 @@
 ----- Adjust Exposure -----
 
-/home/pi/video-recorder-player/bin/camera-align
-/home/pi/video-recorder-player/bin/camera-preview
-/home/pi/video-recorder-player/bin/camera-record
+/home/pi/saguaro-man/bin/camera-align
+/home/pi/saguaro-man/apps/video-recorder/bin/camera-preview
+/home/pi/saguaro-man/apps/video-recorder/bin/camera-record
+
+----- Change Expressions Audio Playback -----
+
+/home/pi/saguaro-man/apps/media-player/app/models/MediaPlayer.js
+/home/pi/saguaro-man/apps/media-player/bin/expressions-play-audio
+
+----- Change USB Drive Location -----
+
+/home/pi/saguaro-man/apps/media-player/app/models/MediaPlayer.js
+/home/pi/saguaro-man/apps/media-player/bin/expressions-play-audio
+/home/pi/saguaro-man/apps/media-player/bin/dusty-loops-play
+/home/pi/saguaro-man/apps/media-player/bin/puppet-people-play
 
 ----- Play Video File -----
 omxplayer __FILENAME__
