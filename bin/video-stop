@@ -1,5 +1,0 @@
-#!/bin/bash
-echo "#bash - Video stop start"
-# killall omxplayer
-# killall omxplayer.bin
-echo "#bash - Video stop end"
