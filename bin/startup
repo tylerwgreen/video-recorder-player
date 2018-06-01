@@ -1,4 +1,5 @@
 #!/bin/bash
+APP_DIR=$(dirname "$0")/..
 echo "#bash - executing startup"
 echo "#bash - killing node"
 killall node
@@ -16,7 +17,7 @@ killall mpg123
 #killall mpg123.bin
 echo "#bash - starting node"
 # add & to the end of your command to tell bash to fork the process off in the background
-node /home/pi/video-recorder-player/app.js &
+node $APP_DIR/app.js &
 echo "#bash - starting chrome"
 echo "#bash - please wait..."
 chromium-browser -incognito --kiosk 127.0.0.1:5000

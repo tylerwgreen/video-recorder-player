@@ -321,9 +321,9 @@ app.post('/video/play', function(req, res, next){
 		}, stylingTimeout);
 	}else{
 		VideoPlayer.play({
-			// fileName:	RecordParams.getVideo(),
 			// suppress playback since it messes with projection
 			fileName:	null,
+			// fileName:	RecordParams.getVideo(),
 			errorCB:	function(error){
 				console.log('/video/play - errorCB');
 				console.log(error);
