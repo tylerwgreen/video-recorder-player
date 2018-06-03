@@ -2,7 +2,7 @@
 Name=Video Rec. Player
 Comment=Video Rec. Player
 Icon=/home/pi/projects/rpi-video-recorder-player/assets/icon/video-recorder-player-icon.png
-Exec=/home/pi/projects/rpi-video-recorder-player/bin/startup
+Exec=/home/pi/projects/rpi-video-recorder-player/bin/autostart
 Type=Application
 Encoding=UTF-8
 Terminal=true

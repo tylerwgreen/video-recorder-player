@@ -2,22 +2,22 @@
 APP_DIR=$(dirname "$0")/..
 echo "#bash - executing startup"
 echo "#bash - killing node"
-killall node
+sudo killall node
 echo "#bash - killing chrome"
-killall chromium-browser
+sudo killall chromium-browser
 echo "#bash - killing omxplayer"
-killall omxplayer
-killall omxplayer.bin
+sudo killall omxplayer
+sudo killall omxplayer.bin
 echo "#bash - killing MP4Box"
-killall MP4Box
+sudo killall MP4Box
 echo "#bash - killing raspivid"
-killall raspivid
+sudo killall raspivid
 echo "#bash - killing mpg123"
-killall mpg123
+sudo killall mpg123
 #killall mpg123.bin
 echo "#bash - starting node"
 # add & to the end of your command to tell bash to fork the process off in the background
-node $APP_DIR/app.js &
+sudo node $APP_DIR/app.js &
 echo "#bash - starting chrome"
 echo "#bash - please wait..."
 chromium-browser -incognito --kiosk 127.0.0.1:5000

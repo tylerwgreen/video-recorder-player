@@ -14,7 +14,7 @@ var timeout	= require('connect-timeout');
  */
 console.log('Define App variables');
 var protocol = 'http://';
-// var address = '192.168.0.10'; // PI A for testing on desktop
+// var address = '192.168.0.6'; // PI A for testing on desktop
 var address = '127.0.0.1'; // for production
 // var address = 'abqjournal.com';
 var port = 5000;
@@ -49,8 +49,8 @@ var durations = {
 	// record: 1000
 };
 var logger = {
-	debug: true,
-	// debug: false,
+	// debug: true,
+	debug: false,
 	// format: 'combined',	// DEFAULT - Standard Apache combined log output.
 	// format: 'tiny',		// The minimal output.
 	format: 'dev',		// Concise output colored by response status for development use.
@@ -78,6 +78,7 @@ var Projector		= require(path.join(paths.models, 'Projector'));
 var Audio			= require(path.join(paths.models, 'Audio'));
 var RecordParams	= require(path.join(paths.models, 'RecordParams'));
 var Camera			= require(path.join(paths.models, 'Camera'));
+var Lights			= require(path.join(paths.models, 'Lights'));
 var VideoConverter	= require(path.join(paths.models, 'VideoConverter'));
 var VideoPlayer		= require(path.join(paths.models, 'VideoPlayer'));
 var Quitter			= require(path.join(paths.models, 'Quitter'));
@@ -97,6 +98,12 @@ Camera.init({
 	recordingsDir: paths.video.recordings,
 	previewDuration: durations.preview,
 	recordDuration: durations.record
+});
+Lights.init({
+	gpioPin: 18,
+	// port - an unsigned integer specifying the pigpio socket port number.
+	// socketPort: 8889,
+	socketPort: 4444,
 });
 VideoConverter.init({
 	binDir: paths.bin,
@@ -154,7 +161,8 @@ app.get('/', function(req, res, next){
 app.get('/js/inline.js', function(req, res, next){
 	console.log(server.address());
 	var params = {
-		debug: false,
+		debug: true,
+		// debug: false,
 		ajaxBase: protocol + (server.address().address || 'localhost') + ':' + server.address().port + '/',
 		timeoutMins: timeoutMins + 1, // +1 from server timeout
 		preview: {
@@ -173,6 +181,7 @@ app.post('/camera/preview/:consent', function(req, res, next){
 	if(typeof req.params.consent === 'undefined')
 		throw new Error('Missing required param: consent');
 	RecordParams.setConsent(req.params.consent);
+	Lights.on();
 	if(styling){
 		setTimeout(function(){
 			console.log('/camera/preview - success');
@@ -261,6 +270,7 @@ app.post('/camera/record', function(req, res, next){
 app.post('/video/convert', function(req, res, next){
 	console.log('ROUTE: /video/convert');
 	console.log(req.params);
+	Lights.off();
 	if(styling){
 		setTimeout(function(){
 			console.log('/video/convert - success');
@@ -322,8 +332,8 @@ app.post('/video/play', function(req, res, next){
 	}else{
 		VideoPlayer.play({
 			// suppress playback since it messes with projection
-			fileName:	null,
-			// fileName:	RecordParams.getVideo(),
+			// fileName:	null,
+			fileName:	RecordParams.getVideo(),
 			errorCB:	function(error){
 				console.log('/video/play - errorCB');
 				console.log(error);
@@ -398,6 +408,7 @@ app.post('/quit', function(req, res, next){
  */
 app.use(function(req, res, next){
 	console.log('ROUTE: 404', req.url);
+	Lights.off();
 	var err = new Error('Not Found:' + req.url);
 	err.status = 404;
 	next(err);
@@ -408,6 +419,7 @@ app.use(function(req, res, next){
  */
 app.use(function(err, req, res, next){
 	console.log('ROUTE: Error: ' + err.message);
+	Lights.off();
 	res.status(err.status || 500);
 	var msg = err.message || 'Unknown error';
 	if(res.headersSent){
