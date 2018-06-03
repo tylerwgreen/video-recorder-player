@@ -101,9 +101,6 @@ Camera.init({
 });
 Lights.init({
 	gpioPin: 18,
-	// port - an unsigned integer specifying the pigpio socket port number.
-	// socketPort: 8889,
-	socketPort: 4444,
 });
 VideoConverter.init({
 	binDir: paths.bin,
