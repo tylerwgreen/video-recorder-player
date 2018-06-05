@@ -23,22 +23,19 @@ var styling	= false;
 // var styling	= true;
 var stylingTimeout = 1000;
 var paths	= {
-	app:	path.join(__dirname, 'app/'),
-	models:	path.join(__dirname, 'app/models/'),
-	views:	path.join(__dirname, 'app/views/'),
-	logs:	path.join(__dirname, 'logs/'),
-	web:	path.join(__dirname, 'web/'),
-	bin:	path.join(__dirname, 'bin/'),
-	audio:	path.join(__dirname, 'assets/audio/music/'),
+	app:	path.join(__dirname, '/app/'),
+	models:	path.join(__dirname, '/app/models/'),
+	views:	path.join(__dirname, '/app/views/'),
+	logs:	path.join(__dirname, '/logs/'),
+	web:	path.join(__dirname, '/web/'),
+	bin:	path.join(__dirname, '/bin/'),
+	audio:	path.join(__dirname, '/assets/audio/music/'),
 	video:	{
-		recordings:	path.join(__dirname, 'assets/video/recordings/'),
+		recordings:	path.join(__dirname, '/assets/video/recordings/'),
 		converted:	{
-			new:	path.join(__dirname, 'assets/video/recordings/converted/new/'),
-			old:	path.join(__dirname, 'assets/video/recordings/converted/old/'),
+			new:	path.join(__dirname, '/assets/video/recordings/converted/new/'),
+			old:	path.join(__dirname, '/assets/video/recordings/converted/old/'),
 		}
-		// consent:	path.join(__dirname, 'assets/video/recordings/consent/'),
-		// deletable:	path.join(__dirname, 'assets/video/recordings/deletable/'),
-		// noConsent:	path.join(__dirname, 'assets/video/recordings/no-consent/'),
 	}
 };
 // console.log('paths', paths);
