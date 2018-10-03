@@ -40,7 +40,8 @@ var paths	= {
 };
 // console.log('paths', paths);
 var durations = {
-	preview: 3000,
+	// preview: 3000,
+	preview: 5000,
 	record: 9000
 	// preview: 1000,
 	// record: 1000
