@@ -42,9 +42,11 @@ var paths	= {
 var durations = {
 	// preview: 3000,
 	preview: 5000,
-	record: 9000
+	record: 9000,
 	// preview: 1000,
 	// record: 1000
+	lightsOnWait: 500,	// time to wait after lights turn on before preview/record happens
+	lightsOffWait: 500	// time to wait after preview/record happens to turn off lights
 };
 var logger = {
 	// debug: true,
@@ -95,10 +97,12 @@ Camera.init({
 	binDir: paths.bin,
 	recordingsDir: paths.video.recordings,
 	previewDuration: durations.preview,
-	recordDuration: durations.record
+	recordDuration: durations.record,
+	lightsOnWaitDuration: durations.lightsOnWait
 });
 Lights.init({
 	gpioPin: 18,
+	lightsOffWaitDuration: durations.lightsOffWait
 });
 VideoConverter.init({
 	binDir: paths.bin,

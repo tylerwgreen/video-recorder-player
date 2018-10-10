@@ -5,6 +5,7 @@ var Lights = {
 	params:	{
 		socketPort: null,
 		gpioPin: null,
+		lightsOffWaitDuration: null,
 	},
 	init: function(params){
 		console.log('Lights.init', params);
@@ -25,7 +26,9 @@ var Lights = {
 	},
 	off: function(){
 		console.log('Lights.off()');
-		this.relay.digitalWrite(false);
+		setTimeout(function(){
+			Lights.relay.digitalWrite(false);
+		}, Lights.params.lightsOffWaitDuration);
 	},
 	_shutdownInit: function(){
 		// https://stackoverflow.com/questions/14031763/doing-a-cleanup-action-just-before-node-js-exits
