@@ -22,12 +22,14 @@ var Lights = {
 	},
 	on: function(){
 		console.log('Lights.on()');
-		this.relay.digitalWrite(true);
+		//this.relay.digitalWrite(true);
+		this.relay.digitalWrite(false);
 	},
 	off: function(){
 		console.log('Lights.off()');
 		setTimeout(function(){
-			Lights.relay.digitalWrite(false);
+			//Lights.relay.digitalWrite(false);
+			Lights.relay.digitalWrite(true);
 		}, Lights.params.lightsOffWaitDuration);
 	},
 	_shutdownInit: function(){
